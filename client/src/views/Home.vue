@@ -1,7 +1,10 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/mevn.jpg" width="350" />
-    <HelloWorld msg="Default Boilerplate Template" />
+    <HelloWorld msg="Default Boilerplate TTemplate" />
+    <p>{{ title }}</p>
+
+    <button @click="title = 'something else'">Hier</button>
   </div>
 </template>
 
@@ -11,8 +14,13 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
   name: "home",
+  data() {
+    return {
+      title: "flop",
+    };
+  },
   components: {
-    HelloWorld
-  }
+    HelloWorld,
+  },
 };
 </script>

@@ -2,7 +2,7 @@
   "name": "cloudboys2",
   "template": "Default",
   "isConfigured": {
-    "client": false,
+    "client": true,
     "server": false
   }
 }
