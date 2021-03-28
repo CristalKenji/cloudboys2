@@ -10,9 +10,15 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@azure/arm-containerinstance": "^6.1.0",
+    "@azure/arm-storage": "^15.3.0",
+    "@azure/cosmos": "^3.10.5",
+    "@azure/ms-rest-nodeauth": "^3.0.8",
+    "@azure/storage-file-share": "^12.5.0",
     "cors": "^2.8.4",
     "dotenv": "^8.2.0",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "minecraft-server-util": "^3.4.4"
   },
   "devDependencies": {
     "nodemon": "^1.18.3",

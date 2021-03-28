@@ -1,0 +1,11 @@
+index -> login? register?
+
+login: ajax -> backend/db gibt es den user ? ja -> /user:
+    btn container-start/stop
+    ajax -> <- json status
+
+
+endpoints -> starten, stoppen, deleten
+index, user/;name
+
+
