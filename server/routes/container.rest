@@ -7,7 +7,7 @@ content-type: application/json
 
 ###
 
-DELETE http://localhost:8080/container
+DELETE http://localhost:9000/container
 content-type: application/json
 
 {
@@ -17,7 +17,7 @@ content-type: application/json
 ###
 
 
-GET http://localhost:8080/container
+GET http://localhost:9000/container
 content-type: application/json
 
 {
@@ -27,7 +27,7 @@ content-type: application/json
 
 ###
 
-GET http://localhost:8080/container/stop
+GET http://localhost:9000/container/stop
 content-type: application/json
 
 {
@@ -36,7 +36,7 @@ content-type: application/json
 
 ###
 
-GET http://localhost:8080/container/start
+GET http://localhost:9000/container/start
 content-type: application/json
 {
     "username": "previous-gerbil"

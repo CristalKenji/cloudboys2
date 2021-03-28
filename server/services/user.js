@@ -23,9 +23,9 @@ function loginUser(username) {
   });
 }
 
-async function createNewUser() {
+async function createNewUser(username) {
   return new Promise((resolve, reject) => {
-    username = utils.generateUserName();
+    //username = utils.generateUserName();
     // verify username is unique
     database.items
       .query("SELECT c.name from c WHERE c.name='" + username + "'")
