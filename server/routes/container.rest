@@ -1,0 +1,43 @@
+POST http://localhost:9000/container
+content-type: application/json
+
+{
+    "username": "fromthebackend"
+}
+
+###
+
+DELETE http://localhost:8080/container
+content-type: application/json
+
+{
+    "username": "faint-deer"
+}
+
+###
+
+
+GET http://localhost:8080/container
+content-type: application/json
+
+{
+    "username": "previous-gerbil"
+}
+
+
+###
+
+GET http://localhost:8080/container/stop
+content-type: application/json
+
+{
+    "username": "genetic-horse"
+}
+
+###
+
+GET http://localhost:8080/container/start
+content-type: application/json
+{
+    "username": "previous-gerbil"
+}
