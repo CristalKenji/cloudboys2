@@ -1,0 +1,16 @@
+version: "3.8"
+# Production ready docker config
+services:
+  node:
+    container_name: "Node_Server"
+    build: ./server
+    ports:
+      - "3000:3000"
+    restart: always
+    init: true
+  vue:
+    container_name: "Nginx"
+    build: ./client
+    ports: 
+      - "5000:443"
+    restart: always
