@@ -12,5 +12,5 @@ services:
     container_name: "Client"
     build: ./client
     ports: 
-      - "5000:443"
+      - "80:80"
     restart: always
