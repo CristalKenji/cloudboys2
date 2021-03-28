@@ -1,0 +1,16 @@
+version: "3.8"
+# Production ready docker config
+services:
+  node:
+    container_name: "Server"
+    build: ./server
+    ports:
+      - "9000:9000"
+    restart: always
+    init: true
+  vue:
+    container_name: "Client"
+    build: ./client
+    ports: 
+      - "5000:443"
+    restart: always
