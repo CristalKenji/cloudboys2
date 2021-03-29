@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3 class="p-3 text-center">Vue.js - Display a list of items with v-for</h3>
+    <h3 class="p-3 text-center">Vue.js - Display a list of items with v-for {{ filter }}</h3>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
@@ -45,9 +45,11 @@
 <script>
 
 export default {
+  props: {
+    filter: String
+  },
   data() {
-    return {
-      filter: "",
+    return {      
       users: [
         { name: "Frank", state: "Pending", ip: "192:168:45:12", dns: "accessible-giant-panda.germanywestcentral.azurecontainer.io" },
         { name: "Vic", state: "Pending", ip: "...", dns: "vic.reynolds@test.com" },

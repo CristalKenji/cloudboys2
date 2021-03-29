@@ -44,7 +44,7 @@ export default {
       this.axios.post('http://localhost:9000/user/login', this.user).then((response) => {
         console.log(response.data)
         if(response.data) {
-          router.push("/users");
+          router.push({ name: 'users', params: { filter: this.user.username } })
           //this.$router.push({name: 'users', params: { filter: "aware-ape" }})
         }
       })
