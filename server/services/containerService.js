@@ -115,12 +115,8 @@ function deleteContainer(username) {
   return containerClient.containerGroups.deleteMethod(resourceGroupName, username + "-container-group");
 }
 
-function checkContainer(username) {
+function getContainer(username) {
   return containerClient.containerGroups.get(resourceGroupName, username + "-container-group");
 }
 
-function getContainerUptime(username) {
-  return containerClient.containerGroups.get(resourceGroupName, username + "-container-group");
-}
-
-module.exports = { createContainer, startContainer, stopContainer, deleteContainer, checkContainer, getContainerUptime };
+module.exports = { createContainer, startContainer, stopContainer, deleteContainer, getContainer };

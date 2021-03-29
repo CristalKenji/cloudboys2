@@ -159,6 +159,7 @@ async function getUserNames() {
 function postUser(username) {
   const user = {
     name: username,
+    runtime: 0
   };
   return database.items.create(user);
 }
@@ -182,6 +183,11 @@ async function getUserByName(username) {
   } catch (error) {
     console.log(error.message);
   }
+}
+
+async function updateRuntime(username, additionalRuntime) {
+  currentTime = await getUserByName(username).runtime;
+  //const query = 
 }
 
 module.exports = {
