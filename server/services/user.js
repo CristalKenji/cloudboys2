@@ -186,7 +186,15 @@ async function getUserByName(username) {
 }
 
 async function updateRuntime(username, additionalRuntime) {
-  currentTime = await getUserByName(username).runtime;
+  let user = await getUserByName(username);
+  user.resources[0].runtime += additionalRuntime;
+  try {
+    console.log("updating runtime");
+    return await database.items.upsert(user.resources[0]);
+  } catch (error) {
+    console.log(error.message);
+  }
+
   //const query = 
 }
 
@@ -196,4 +204,5 @@ module.exports = {
   getUserNames,
   deleteUser,
   getAllInfos,
+  updateRuntime
 };
