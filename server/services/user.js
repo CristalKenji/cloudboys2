@@ -29,7 +29,7 @@ async function userInfo(username) {
   return new Promise((resolve, reject) => {
     const user = { name: username, state: "", ip: "", dns: "" };
     containerClient
-      .checkContainer(username)
+      .getContainer(username)
       .then((result) => {
         //console.log(result);
         const state = result.instanceView.state;
@@ -159,7 +159,7 @@ async function getUserNames() {
 function postUser(username) {
   const user = {
     name: username,
-    runtime: 0
+    runtime: 0,
   };
   return database.items.create(user);
 }
@@ -195,7 +195,7 @@ async function updateRuntime(username, additionalRuntime) {
     console.log(error.message);
   }
 
-  //const query = 
+  //const query =
 }
 
 module.exports = {
@@ -204,5 +204,5 @@ module.exports = {
   getUserNames,
   deleteUser,
   getAllInfos,
-  updateRuntime
+  updateRuntime,
 };
