@@ -3,7 +3,6 @@ const { util } = require("prettier");
 const services = require("../services"); //??
 const main = require("../utils/utils");
 const containerClient = require("../services/container");
-
 const router = express.Router();
 const { userService } = services;
 
@@ -61,6 +60,25 @@ router.delete("/users/", (req, res) => {
   } else {
     res.status(300).send("user name undefined");
   }
+});
+
+router.post("/login", (req, res) => {
+  const username = req.body.username;
+  console.log(username);
+  userService
+    .verifyUserExits(username)
+    .then((result) => {
+      console.log(result);
+      if (result) {
+        res.status(200).send(true);
+      } else {
+        res.status(200).send(false);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
 });
 
 module.exports = router;

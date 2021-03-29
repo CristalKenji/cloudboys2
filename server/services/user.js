@@ -47,19 +47,23 @@ async function userInfo(username) {
   });
 }
 
-function loginUser(username) {
+function verifyUserExits(username) {
   //console.log("loginUser");
   return new Promise((resolve, reject) => {
-    database.items
-      .query("SELECT c.name from c WHERE c.name ='" + username + "'")
-      .fetchAll()
-      .then((usernames) => {
-        //console.log(usernames);
-        resolve(usernames.resources.length == 1);
-      })
-      .catch((error) => {
-        reject(error);
-      });
+    if (typeof username !== "undefined" && username !== "") {
+      database.items
+        .query("SELECT c.name from c WHERE c.name ='" + username + "'")
+        .fetchAll()
+        .then((usernames) => {
+          //console.log(usernames);
+          resolve(usernames.resources.length == 1);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    } else {
+      reject("username undefined or empty");
+    }
   });
 }
 
@@ -182,7 +186,7 @@ async function getUserByName(username) {
 
 module.exports = {
   createNewUser,
-  loginUser,
+  verifyUserExits,
   getUserNames,
   deleteUser,
   getAllInfos,
