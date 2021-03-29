@@ -5,9 +5,9 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>State</th>
-          <th>IP</th>
+          <th>State</th>          
           <th>DNS</th>
+          <th>Details</th>
           <th colSpan="2">Container Functions</th>
           <th>Account</th>
         </tr>
@@ -16,8 +16,13 @@
         <tr v-for="user in filteredUsers" :key="user.name">
           <td>{{ user.name }}</td>
           <td>{{ user.state }}</td>
-          <td>{{ user.ip }}</td>
           <td>{{ user.dns }}</td>
+           <td>
+            <b-button :disabled='user.state !== "Running"' @click="$emit('btnDetails', user.name, $event)" variant="outline-success"
+            :title="user.state === 'Stopped'? 'Show container details' : 'Container must be running'">
+              Details
+            </b-button>
+          </td>
           <td>
             <b-button :disabled='user.state !== "Stopped"' @click="$emit('btnStart', user.name, $event)" variant="outline-primary"
             :title="user.state === 'Stopped'? 'Starts the container' : 'Container must be stopped for execution'">
@@ -51,16 +56,12 @@ export default {
   data() {
     return {      
       users: [
-        { name: "Frank", state: "Pending", ip: "192:168:45:12", dns: "accessible-giant-panda.germanywestcentral.azurecontainer.io" },
-        { name: "Vic", state: "Pending", ip: "...", dns: "vic.reynolds@test.com" },
-        { name: "Gina", state: "Pending", ip: "...", dns: "gina.jabowski@test.com" },
-        { name: "Jessi", state: "Pending", ip: "...", dns: "jessi.glaser@test.com" },
-        { name: "Jay", state: "Pending", ip: "...", dns: "Usjay.bilzerian@test.comer" },
-        { name: "Franky", state: "Pending", ip: "...", dns: "frank.murphy@test.com" },
-        { name: "Vicy", state: "Pending", ip: "...", dns: "vic.reynolds@test.com" },
-        { name: "Gina2", state: "Pending", ip: "...", dns: "gina.jabowski@test.com" },
-        { name: "Jessica", state: "Pending", ip: "...", dns: "jessi.glaser@test.com" },
-        { name: "Jay-Jay", state: "Pending", ip: "...", dns: "Usjay.bilzerian@test.comer" },
+        { name: "Frank", state: "Pending", dns: "accessible-giant-panda.germanywestcentral.azurecontainer.io" },
+        { name: "Vic", state: "Pending", dns: "vic.reynolds@test.com" },
+        { name: "Gina", state: "Pending", dns: "gina.jabowski@test.com" },
+        { name: "Jessi", state: "Pending", dns: "jessi.glaser@test.com" },
+        { name: "Jay", state: "Pending", dns: "Usjay.bilzerian@test.comer" },
+        
       ],
     };
   },

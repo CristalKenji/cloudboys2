@@ -5,8 +5,24 @@ const fileStorage = require("./fileStorage");
 const containerClient = require("./containerService");
 const { ConflictResolutionMode } = require("@azure/cosmos");
 //const { resolveInclude } = require("ejs");
+const containerUtils = require("../utils/containerUtils");
 
 const database = client.database(databaseId).container(userContainer);
+
+function extendedStatus(username) {
+  return new Promise((resolve, reject) => {
+    containerUtils
+      .getStatus(username)
+      .then((result) => {
+        if (result.containerStatus.available && result.serverStatus.available) {
+          resolve(result.serverStatus.status);
+        } else {
+          resolve("gibt nix");
+        }
+      })
+      .catch((error) => reject(error));
+  });
+}
 
 async function getAllInfos() {
   try {
@@ -205,4 +221,5 @@ module.exports = {
   deleteUser,
   getAllInfos,
   updateRuntime,
+  extendedStatus,
 };
