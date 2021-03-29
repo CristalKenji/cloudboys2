@@ -1,8 +1,9 @@
 const dbclient = require("./db");
 const { databaseId, userContainer } = require("./config");
 const database = dbclient.database(databaseId).container(userContainer);
-const containerService = require("./container");
+const containerService = require("./containerService");
 const mcu = require('minecraft-server-util');
+const cutils = require('../utils/containerUtils');
 
 
 const cyclesTillStop = 5;
@@ -18,7 +19,7 @@ async function containerWatchdog() {
             .fetchAll()
             .then((usernames) => {
                 usernames.resources.forEach(element => {
-                    containerService.checkContainer(element.name).then((foundContainer) => {
+                    containerService.getContainer(element.name).then((foundContainer) => {
                         console.log(`${element.name}: ${foundContainer.instanceView.state}`)
                         if (foundContainer.instanceView.state == 'Running') {
                             mcu.status(foundContainer.ipAddress.fqdn).then((result) => {
@@ -58,24 +59,13 @@ async function autoRefreshInfoLog() {
     console.log("running watchdog");
     let inactivityCounter = new Map();
     setInterval(() => {
-
-        database.items
-            .query("SELECT c.name from c")
-            .fetchAll()
-            .then((usernames) => {
-                usernames.resources.forEach(element => {
-                    containerService.getContainerUptime(element.name).then((foundContainer) => {
-                        //console.log(foundContainer.containers[0].instanceView.currentState)
-                        let current = new Date(foundContainer.containers[0].instanceView.currentState.finishTime);
-                        let previous = new Date(foundContainer.containers[0].instanceView.previousState.startTime);
-                        let differenceInMs = current - previous;
-                    }, (err) => {
-                        //console.log("error getting Container info on " + element.name)
-                    })
-                });
-            }, (err) => { console.log(err); })
-    }, 5000)
+        cutils.getStatus("promising-bee").then((status) => {
+            console.log(status);
+        })
+    }, 10000)
 }
+
+
 
 module.exports = {
     containerWatchdog, autoRefreshInfoLog

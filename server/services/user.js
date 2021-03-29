@@ -2,7 +2,7 @@ const client = require("./db");
 const { databaseId, userContainer } = require("./config");
 const utils = require("../utils/utils");
 const fileStorage = require("./fileStorage");
-const containerClient = require("./container");
+const containerClient = require("./containerService");
 //const { resolveInclude } = require("ejs");
 
 const database = client.database(databaseId).container(userContainer);
@@ -118,6 +118,7 @@ async function getUserNames() {
 function postUser(username) {
   const user = {
     name: username,
+    runtime: 0
   };
   return database.items.create(user);
 }
@@ -150,6 +151,11 @@ async function getUserByName(username) {
   } catch (error) {
     console.log(error.message);
   }
+}
+
+async function updateRuntime(username, additionalRuntime) {
+  currentTime = await getUserByName(username).runtime;
+  //const query = 
 }
 
 module.exports = {
