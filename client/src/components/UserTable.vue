@@ -19,19 +19,22 @@
           <td>{{ user.ip }}</td>
           <td>{{ user.dns }}</td>
           <td>
-            <b-button @click="$emit('btnStart', user.name, $event)" variant="outline-primary">
+            <b-button :disabled='user.state !== "Stopped"' @click="$emit('btnStart', user.name, $event)" variant="outline-primary"
+            :title="user.state === 'Stopped'? 'Starts the container' : 'Container must be stopped for execution'">
               Start
             </b-button>
           </td>
           <td>
-            <b-button @click="$emit('btnStop', user.name, $event)" variant="outline-secondary">
+            <b-button :disabled='user.state !== "Running"' @click="$emit('btnStop', user.name, $event)" variant="outline-primary"
+            :title="user.state === 'Running'? 'Stops the container' : 'Container must be running for execution'">
               Stop
             </b-button>
           </td>
           <td>
-            <b-button @click="$emit('btnDelete', user.name, $event)" variant="outline-danger">
+            <b-button :disabled='user.state !== "Stopped"' @click="$emit('btnDelete', user.name, $event)" variant="outline-danger" 
+            v-b-tooltip.hover :title="user.state === 'Stopped'? 'Deletes entire account' : 'Container must be stopped for execution'">
               Delete
-            </b-button>
+            </b-button>           
           </td>
         </tr>
       </tbody>
@@ -45,11 +48,16 @@ export default {
     return {
       filter: "",
       users: [
-        { name: "Frank", state: "Pending", ip: "...", dns: "frank.murphy@test.com" },
+        { name: "Frank", state: "Pending", ip: "192:168:45:12", dns: "accessible-giant-panda.germanywestcentral.azurecontainer.io" },
         { name: "Vic", state: "Pending", ip: "...", dns: "vic.reynolds@test.com" },
         { name: "Gina", state: "Pending", ip: "...", dns: "gina.jabowski@test.com" },
         { name: "Jessi", state: "Pending", ip: "...", dns: "jessi.glaser@test.com" },
         { name: "Jay", state: "Pending", ip: "...", dns: "Usjay.bilzerian@test.comer" },
+        { name: "Franky", state: "Pending", ip: "...", dns: "frank.murphy@test.com" },
+        { name: "Vicy", state: "Pending", ip: "...", dns: "vic.reynolds@test.com" },
+        { name: "Gina2", state: "Pending", ip: "...", dns: "gina.jabowski@test.com" },
+        { name: "Jessica", state: "Pending", ip: "...", dns: "jessi.glaser@test.com" },
+        { name: "Jay-Jay", state: "Pending", ip: "...", dns: "Usjay.bilzerian@test.comer" },
       ],
     };
   },
