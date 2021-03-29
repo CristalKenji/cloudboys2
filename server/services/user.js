@@ -3,6 +3,7 @@ const { databaseId, userContainer } = require("./config");
 const utils = require("../utils/utils");
 const fileStorage = require("./fileStorage");
 const containerClient = require("./container");
+const { ConflictResolutionMode } = require("@azure/cosmos");
 //const { resolveInclude } = require("ejs");
 
 const database = client.database(databaseId).container(userContainer);
@@ -64,31 +65,34 @@ function loginUser(username) {
 
 async function createNewUser(username) {
   return new Promise((resolve, reject) => {
-    //username = utils.generateUserName();
-    // verify username is unique
-    database.items
-      .query("SELECT c.name from c WHERE c.name='" + username + "'")
-      .fetchAll()
-      .then((usernames) => {
-        if (usernames.resources.length != 0) {
-          return new Error("username allready taken");
-        }
-      })
-      .then(() => {
-        console.log("creating user");
-        return postUser(username);
-      })
-      .then(() => {
-        // create file-share
-        console.log("creating fileshare");
-        return fileStorage.createFileShare(username);
-      })
-      .then(() => {
-        resolve("user db- and file-share account created");
-      })
-      .catch((error) => {
-        reject(error.message);
-      });
+    if (typeof username !== "undefined" && username !== "") {
+      // verify username is unique
+      database.items
+        .query("SELECT c.name from c WHERE c.name='" + username + "'")
+        .fetchAll()
+        .then((usernames) => {
+          if (usernames.resources.length != 0) {
+            return new Error("username allready taken");
+          }
+        })
+        .then(() => {
+          console.log("creating user");
+          return postUser(username);
+        })
+        .then(() => {
+          // create file-share
+          console.log("creating fileshare");
+          return fileStorage.createFileShare(username);
+        })
+        .then(() => {
+          resolve("user db- and file-share account created");
+        })
+        .catch((error) => {
+          reject(error.message);
+        });
+    } else {
+      reject("username undefined or empty");
+    }
   });
 }
 
@@ -96,14 +100,14 @@ function deleteUser(username) {
   return new Promise((resolve, reject) => {
     const promises = [
       deleteDBEntry(username),
-      containerClient.deleteContainer(username),
       fileStorage.deleteFileShare(username),
+      containerClient.deleteContainer(username),
     ];
     Promise.allSettled(promises)
       .then((results) => {
         results.forEach((result) => {
           //console.log("deleteUser result status");
-          //console.log(result.status);
+          console.log(result);
         });
       })
       .catch((errors) => {
@@ -117,37 +121,31 @@ function deleteUser(username) {
 }
 
 function deleteDBEntry(username) {
+  console.log("username " + username);
   return new Promise((resolve, reject) => {
     database.items
       .query("SELECT c.id from c WHERE c.name ='" + username + "'")
       .fetchAll()
       .then((result) => {
-        let id = result.resources[0].id; //"'" + result.resources[0].id + "'";
+        //console.log("result");
+        //console.log(result);
+        let id = result.resources[0].id;
+
+        //"'" + result.resources[0].id + "'";
         //console.log("id: " + id);
         return database.item(id).delete();
       })
       .then((result) => {
-        //console.log("deleteDBEntry");
-        //console.log(result.statusCode);
+        console.log("deleteDBEntry");
+        console.log(result);
         resolve("db entry deleted");
       })
       .catch((error) => {
-        //console.log(error.body.code);
+        console.log(error);
         reject("db entry " + error.body.code);
       });
   });
 }
-
-/*
-async function getUsers() {
-  try {
-    console.log("getUsers");
-    return await container.items.query("SELECT * from c").fetchAll();
-  } catch (error) {
-    console.log(error.message);
-  }
-}
-*/
 
 async function getUserNames() {
   //console.log("getUserNames");
@@ -160,16 +158,7 @@ function postUser(username) {
   };
   return database.items.create(user);
 }
-/*
-async function deleteUser(id) {
-  try {
-    console.log(`Deleted item with id: ${id}`);
-    return await database.item(id).delete();
-  } catch (error) {
-    console.log(error.message);
-  }
-}
-*/
+
 async function deleteUserContainer() {
   try {
     console.log(`Deleted user container`);

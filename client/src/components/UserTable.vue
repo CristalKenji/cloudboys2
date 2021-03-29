@@ -31,8 +31,8 @@
             </b-button>
           </td>
           <td>
-            <b-button :disabled='user.state !== "Stopped"' @click="$emit('btnDelete', user.name, $event)" variant="outline-danger" 
-            v-b-tooltip.hover :title="user.state === 'Stopped'? 'Deletes entire account' : 'Container must be stopped for execution'">
+            <b-button :disabled='user.state !== "ResourceNotFound" && user.state !== "Stopped"' @click="$emit('btnDelete', user.name, $event)" variant="outline-danger" 
+            v-b-tooltip.hover :title="user.state === 'Stopped' || user.state === 'ResourceNotFound' ? 'Deletes entire account' : 'Container must be stopped for execution'">
               Delete
             </b-button>           
           </td>
