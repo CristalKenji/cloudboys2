@@ -2,7 +2,7 @@ const client = require("./db");
 const { databaseId, userContainer } = require("./config");
 const utils = require("../utils/utils");
 const fileStorage = require("./fileStorage");
-const containerClient = require("./container");
+const containerClient = require("./containerService");
 const { ConflictResolutionMode } = require("@azure/cosmos");
 //const { resolveInclude } = require("ejs");
 
