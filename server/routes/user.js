@@ -5,6 +5,19 @@ const main = require("../utils/utils");
 const router = express.Router();
 const { userService } = services;
 
+router.get("/allInfos", (req, res) => {
+  userService
+    .getAllInfos()
+    .then((result) => {
+      console.log(result);
+      res.status(200).send(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send("grüße vom backend");
+    });
+});
+
 // single user page
 router.get("/:name", (req, res) => {
   res.status(200).send("grüße vom backend");

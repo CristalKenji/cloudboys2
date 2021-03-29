@@ -4,7 +4,7 @@
     <HelloWorld msg="Default Boilerplate TTemplate" />
     <p>{{ title }}</p>
 
-    <button @click="title = 'something else'">Hier</button>
+    <button @click="title = 'something eeelse'">Hier</button>
   </div>
 </template>
 

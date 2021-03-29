@@ -43,6 +43,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -74,5 +75,27 @@ export default {
       });
     },
   },
+  methods: {
+    getTableData: function() {
+      // axios stuff
+      console.log("fetching data");
+      this.axios.get('http://localhost:9000/user/allInfos').then((response) => {
+        console.log(response.data)
+        this.users = response.data;
+      })
+    },
+    intervalFetchData: function () {
+            setInterval(() => { 
+                this.getTableData();
+                }, 8000);    
+        }
+  },    
+    mounted () {
+        // Run the functions once when mounted 
+        this.getTableData();
+        // get state function ect. 
+        // Run the intervalFetchData function once to set the interval time for later refresh
+        //this.intervalFetchData();
+    }
 };
 </script>

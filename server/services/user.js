@@ -7,6 +7,45 @@ const containerClient = require("./container");
 
 const database = client.database(databaseId).container(userContainer);
 
+async function getAllInfos() {
+  try {
+    let users = [];
+    const result = await getUserNames();
+    const array = result.resources;
+    for (let i = 0; i < array.length; i++) {
+      const name = array[i].name;
+      user = await userInfo(name);
+      users.push(user);
+    }
+    console.log(users);
+    return users;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function userInfo(username) {
+  return new Promise((resolve, reject) => {
+    const user = { name: username, state: "", ip: "", dns: "" };
+    containerClient
+      .checkContainer(username)
+      .then((result) => {
+        //console.log(result);
+        const state = result.instanceView.state;
+        const dnsLabel = result.ipAddress.dnsNameLabel;
+        user.state = state;
+        user.dns = dnsLabel;
+        resolve(user);
+      })
+      .catch((error) => {
+        //console.log(error.code);
+        user.state = error.code;
+        user.dns = "...";
+        resolve(user);
+      });
+  });
+}
+
 function loginUser(username) {
   //console.log("loginUser");
   return new Promise((resolve, reject) => {
@@ -157,4 +196,5 @@ module.exports = {
   loginUser,
   getUserNames,
   deleteUser,
+  getAllInfos,
 };
