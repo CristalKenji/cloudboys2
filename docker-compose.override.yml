@@ -4,6 +4,8 @@ services:
   node:
     working_dir: /usr/src/app
     entrypoint: sh -c "npm install --include=dev && npm run serve"
+    environment: 
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./server:/usr/src/app
   vue:

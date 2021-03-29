@@ -2,7 +2,7 @@ const client = require("./db");
 const { databaseId, userContainer } = require("./config");
 const utils = require("../utils/utils");
 const fileStorage = require("./fileStorage");
-const containerClient = require("./container");
+const containerClient = require("./containerService");
 const { ConflictResolutionMode } = require("@azure/cosmos");
 //const { resolveInclude } = require("ejs");
 
@@ -159,6 +159,7 @@ async function getUserNames() {
 function postUser(username) {
   const user = {
     name: username,
+    runtime: 0
   };
   return database.items.create(user);
 }
@@ -184,10 +185,24 @@ async function getUserByName(username) {
   }
 }
 
+async function updateRuntime(username, additionalRuntime) {
+  let user = await getUserByName(username);
+  user.resources[0].runtime += additionalRuntime;
+  try {
+    console.log("updating runtime");
+    return await database.items.upsert(user.resources[0]);
+  } catch (error) {
+    console.log(error.message);
+  }
+
+  //const query = 
+}
+
 module.exports = {
   createNewUser,
   verifyUserExits,
   getUserNames,
   deleteUser,
   getAllInfos,
+  updateRuntime
 };
