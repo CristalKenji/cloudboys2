@@ -2,6 +2,7 @@
   <div class="container">
     <div v-if="filter === ''">
       <h3 class="p-3 text-left">List of all users</h3>
+      <p tex-right>Full-Address: 'DNS' + .germanywestcentral.azurecontainer.io</p>
     </div>
     <div v-if="filter !== ''">
       <h3 class="p-3 text-left">
@@ -26,8 +27,13 @@
           <td>{{ user.state }}</td>
           <td>{{ user.dns }}</td>
           <td>
-            <button @click="btnDetails(user)">Details</button>
+            <b-button :disabled="user.state !== 'Running'" @click="btnDetails(user)"  variant="outline-success">Details</b-button>
             <template v-if="user.showDetails">
+
+              <div v-if="user.details === ''">
+                <p>No details available</p>
+              </div>
+
               <ul id="v-for-object" class="demo">
                 <li v-for="(value, name) in user.details" :key="value.host">
                   {{ name }}: {{ value }}
@@ -97,35 +103,35 @@ export default {
         {
           name: "Frank",
           state: "Pending",
-          showDetails: true,
+          showDetails: false,
           details: "",
           dns: "accessible-giant-panda",
         },
         {
           name: "Vic",
           state: "Pending",
-          showDetails: true,
+          showDetails: false,
           details: "",
           dns: "vic.reynolds@test.com",
         },
         {
           name: "Gina",
           state: "Pending",
-          showDetails: true,
+          showDetails: false,
           details: "",
           dns: "gina.jabowski@test.com",
         },
         {
           name: "Jessi",
           state: "Pending",
-          showDetails: true,
+          showDetails: false,
           details: "",
           dns: "jessi.glaser@test.com",
         },
         {
           name: "Jay",
           state: "Pending",
-          showDetails: true,
+          showDetails: false,
           details: "",
           dns: "Usjay.bilzerian@test.comer",
         },
@@ -171,11 +177,12 @@ export default {
     },
     getTableData: function () {
       // axios stuff
-      //console.log("fetching data");
+      console.log("fetching data");
       this.axios.get("/user/allInfos").then((response) => {
-        //console.log(response.data);
+        console.log(response.data);
+        console.log("data");
         this.users = response.data;
-      });
+      }).catch(error => console.log(error));
     },
     intervalFetchData: function () {
       setInterval(() => {

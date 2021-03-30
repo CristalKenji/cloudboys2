@@ -1,10 +1,11 @@
 <template>
-  <div class="about">
+  <div class="home">
     <div>
       <b-jumbotron>
         <template #header>Cloudboys</template>
+        <img alt="Slogan in ASCII" src="../assets/logo_klein.png" width="320" />
+        <img alt="Slogan in ASCII" src="../assets/banner.jpg" width="900" />
         <hr class="my-4" />
-
         <p>Get your own Minecraft container.</p>
         <div>
           <b-button v-b-modal.modal-center variant="primary">Login</b-button>
@@ -25,7 +26,7 @@
 <script>
 import router from "../router";
 export default {
-  name: "about",
+  name: "home",
   data() {
     return {
       modalShow: false,
@@ -48,10 +49,11 @@ export default {
       });
     },
     btnRegister: function () {
-      alert("hey btnRegister");
+      //alert("hey btnRegister");
       this.axios.post("/user/users").then((/* response */) => {
-        //console.log(response.data)
+      
       });
+      router.push("users");
     },
   },
 };

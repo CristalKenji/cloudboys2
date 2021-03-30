@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home-old">
     <img alt="Vue logo" src="../assets/mevn.jpg" width="350" />
     <HelloWorld msg="Default Boilerplate TTemplate" />
     <p>{{ title }}</p>
@@ -13,7 +13,7 @@
 import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
-  name: "home",
+  name: "home-old",
   data() {
     return {
       title: "flop",

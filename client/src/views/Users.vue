@@ -1,13 +1,12 @@
 <template>
   <div class="users">
-    <img alt="Vue logo" src="../assets/mevn.jpg" width="350" />
+    <img alt="Slogan in ASCII" src="../assets/banner.jpg" width="950" />
     <UserTable
       :filter="filter"
       @btnStart="startContainer"
       @btnStop="stopContainer"
       @btnDelete="deleteAccount"
-    />
-    {{ this.$route.params.filter }}
+    />    
   </div>
 </template>
 
