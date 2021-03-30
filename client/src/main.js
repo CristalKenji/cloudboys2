@@ -9,6 +9,8 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
+axios.defaults.baseURL = "https://" + document.location.hostname + ":9000";
+
 Vue.use(VueAxios, axios);
 
 // Make BootstrapVue available throughout your project

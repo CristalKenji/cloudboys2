@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h3 class="p-3 text-center">
-      Vue.js - Display a list of items with v-for {{ filter }}
+      Vue.js - Display a list of items with v-for {{ filter }} testing
     </h3>
     <table class="table table-striped table-bordered">
       <thead>
@@ -121,7 +121,7 @@ export default {
     getTableData: function () {
       // axios stuff
       //console.log("fetching data");
-      this.axios.get("http://localhost:9000/user/allInfos").then((response) => {
+      this.axios.get("/user/allInfos").then((response) => {
         //console.log(response.data);
         this.users = response.data;
       });

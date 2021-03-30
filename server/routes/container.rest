@@ -1,4 +1,4 @@
-POST http://localhost:9000/container
+POST https://cloudboys-webapp2.azurewebsites.net/
 content-type: application/json
 
 {

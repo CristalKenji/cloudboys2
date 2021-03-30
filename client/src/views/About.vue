@@ -36,26 +36,22 @@ export default {
   },
   methods: {
     btnLogin: function () {
-      this.axios
-        .post("http://localhost:9000/user/login", this.user)
-        .then((response) => {
-          //console.log(response.data)
-          if (response.data) {
-            router.push({
-              name: "users",
-              params: { filter: this.user.username },
-            });
-            //this.$router.push({name: 'users', params: { filter: "aware-ape" }})
-          }
-        });
+      this.axios.post("/user/login", this.user).then((response) => {
+        //console.log(response.data)
+        if (response.data) {
+          router.push({
+            name: "users",
+            params: { filter: this.user.username },
+          });
+          //this.$router.push({name: 'users', params: { filter: "aware-ape" }})
+        }
+      });
     },
     btnRegister: function () {
       alert("hey btnRegister");
-      this.axios
-        .post("http://localhost:9000/user/users")
-        .then((/* response */) => {
-          //console.log(response.data)
-        });
+      this.axios.post("/user/users").then((/* response */) => {
+        //console.log(response.data)
+      });
     },
   },
 };
