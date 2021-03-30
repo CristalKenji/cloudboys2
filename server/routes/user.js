@@ -10,11 +10,11 @@ router.get("/allInfos", (req, res) => {
   userService
     .getAllInfos()
     .then((result) => {
-      console.log(result);
+      //console.log(result);
       res.status(200).send(result);
     })
     .catch((error) => {
-      console.log(error);
+      //console.log(error);
       res.status(500).send("grüße vom backend");
     });
 });
