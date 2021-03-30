@@ -2,7 +2,7 @@
   <div class="about">
     <div>
       <b-jumbotron>
-        <template #header>Cloudboys</template> 
+        <template #header>Cloudboys</template>
         <hr class="my-4">
 
         <p>
