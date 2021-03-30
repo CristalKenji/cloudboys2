@@ -1,13 +1,12 @@
 <template>
   <div class="container">
-     <div v-if="filter === ''">      
-      <h3 class="p-3 text-left">
-        List of all users 
-      </h3>
+    <div v-if="filter === ''">
+      <h3 class="p-3 text-left">List of all users</h3>
     </div>
-    <div v-if="filter !== ''">      
+    <div v-if="filter !== ''">
       <h3 class="p-3 text-left">
-        Addres to your container: {{ filter }}.germanywestcentral.azurecontainer.io
+        Addres to your container:
+        {{ filter }}.germanywestcentral.azurecontainer.io
       </h3>
     </div>
     <table class="table table-striped table-bordered">
@@ -26,17 +25,15 @@
           <td>{{ user.name }}</td>
           <td>{{ user.state }}</td>
           <td>{{ user.dns }}</td>
-          <td>         
-
-          <button @click="btnDetails(user)">Details</button>          
-          <template v-if="user.showDetails">
-            <ul id="v-for-object" class="demo">
-              <li v-for="(value, name) in user.details" :key="value.host">
+          <td>
+            <button @click="btnDetails(user)">Details</button>
+            <template v-if="user.showDetails">
+              <ul id="v-for-object" class="demo">
+                <li v-for="(value, name) in user.details" :key="value.host">
                   {{ name }}: {{ value }}
-              </li>
-            </ul>         
-          </template>
-   
+                </li>
+              </ul>
+            </template>
           </td>
           <td>
             <b-button
@@ -86,7 +83,6 @@
         </tr>
       </tbody>
     </table>
-    
   </div>
 </template>
 
@@ -96,18 +92,43 @@ export default {
     filter: String,
   },
   data() {
-    return {       
+    return {
       users: [
         {
           name: "Frank",
           state: "Pending",
-          showDetails: true, details: "",
-          dns: "accessible-giant-panda"
+          showDetails: true,
+          details: "",
+          dns: "accessible-giant-panda",
         },
-        { name: "Vic", state: "Pending", showDetails: true, details: "", dns: "vic.reynolds@test.com" },
-        { name: "Gina", state: "Pending", showDetails: true, details: "",dns: "gina.jabowski@test.com"},
-        { name: "Jessi", state: "Pending", showDetails: true, details: "",dns: "jessi.glaser@test.com" },
-        { name: "Jay", state: "Pending", showDetails: true, details: "",dns: "Usjay.bilzerian@test.comer"},
+        {
+          name: "Vic",
+          state: "Pending",
+          showDetails: true,
+          details: "",
+          dns: "vic.reynolds@test.com",
+        },
+        {
+          name: "Gina",
+          state: "Pending",
+          showDetails: true,
+          details: "",
+          dns: "gina.jabowski@test.com",
+        },
+        {
+          name: "Jessi",
+          state: "Pending",
+          showDetails: true,
+          details: "",
+          dns: "jessi.glaser@test.com",
+        },
+        {
+          name: "Jay",
+          state: "Pending",
+          showDetails: true,
+          details: "",
+          dns: "Usjay.bilzerian@test.comer",
+        },
       ],
     };
   },
@@ -124,34 +145,34 @@ export default {
       });
     },
   },
-  methods: {  
+  methods: {
     getExtendedDetails: function () {
-      this.users.forEach(user => {
-        if(user.state === "Running") {
-          console.log(user.name)
+      this.users.forEach((user) => {
+        if (user.state === "Running") {
+          console.log(user.name);
           let post = {
             username: user.name,
-           };
-          this.axios.post("http://localhost:9000/container/extendedStatus", post).then((response) => {
-            console.log(response.data);
-            let details =response.data;
+          };
+          this.axios
+            .post("/container/extendedStatus", post)
+            .then((response) => {
+              console.log(response.data);
+              let details = response.data;
 
-            if(details !== undefined && details !== "")
-            {
-              user.details = details;
-
-            } else {
-              //user.details = "No details available right now";
-            }
-            
-          }).catch(error => console.log(error));
+              if (details !== undefined && details !== "") {
+                user.details = details;
+              } else {
+                //user.details = "No details available right now";
+              }
+            })
+            .catch((error) => console.log(error));
         }
       });
-    },  
+    },
     getTableData: function () {
       // axios stuff
       //console.log("fetching data");
-      this.axios.get("http://localhost:9000/user/allInfos").then((response) => {
+      this.axios.get("/user/allInfos").then((response) => {
         //console.log(response.data);
         this.users = response.data;
       });
@@ -162,7 +183,7 @@ export default {
         //this.getExtendedDetails();
       }, 8000);
     },
-    btnDetails: function (user) {      
+    btnDetails: function (user) {
       user.showDetails = !user.showDetails;
       this.getExtendedDetails();
     },

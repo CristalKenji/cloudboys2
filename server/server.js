@@ -23,7 +23,7 @@ app.use('/api', require('./routes/api'));
 app.use("/container", require("./routes/container"));
 app.use("/user", require("./routes/user"));
 
-//watchdog.autoRefreshInfoLog();
+watchdog.containerWatchdog();
 
 
 // Listening to port

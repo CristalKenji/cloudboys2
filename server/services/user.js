@@ -53,7 +53,7 @@ async function getAllInfos() {
 
 async function userInfo(username) {
   return new Promise((resolve, reject) => {
-    const user = { name: username, state: "", showDetails: true, details: "", dns: "" };
+    const user = { name: username, state: "", showDetails: false, details: "", dns: "" };
     containerClient
       .getContainer(username)
       .then((result) => {

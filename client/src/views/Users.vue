@@ -27,22 +27,18 @@ export default {
       let post = {
         username: username,
       };
-      this.axios
-        .post("http://localhost:9000/container/start", post)
-        .then((/* response */) => {
-          //console.log(response.data)
-        });
+      this.axios.post("/container/start", post).then((/* response */) => {
+        //console.log(response.data)
+      });
     },
     stopContainer: function (username) {
       //console.log("stopContainer clicked from " + username);
       let post = {
         username: username,
       };
-      this.axios
-        .post("http://localhost:9000/container/stop", post)
-        .then((/* response */) => {
-          //console.log(response.data)
-        });
+      this.axios.post("/container/stop", post).then((/* response */) => {
+        //console.log(response.data)
+      });
     },
     deleteAccount: function (username) {
       //console.log("delete clicked from " + username);
@@ -51,11 +47,9 @@ export default {
           username: username,
         },
       };
-      this.axios
-        .delete("http://localhost:9000/user/users", post)
-        .then((/* response */) => {
-          //console.log(response.data)
-        });
+      this.axios.delete("/user/users", post).then((/* response */) => {
+        //console.log(response.data)
+      });
     },
   },
   mounted() {

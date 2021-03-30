@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
 Vue.use(VueAxios, axios);
+axios.defaults.baseURL = "http://cloudboysbackend.germanywestcentral.azurecontainer.io:9000";
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue);

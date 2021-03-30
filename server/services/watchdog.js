@@ -52,7 +52,7 @@ async function containerWatchdog() {
                     })
                 });
             }, (err) => { console.log(err); })
-    }, 10000)
+    }, cycleDuration)
 }
 
 async function autoRefreshInfoLog() {
