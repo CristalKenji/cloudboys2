@@ -15,12 +15,22 @@ function extendedStatus(username) {
       .getStatus(username)
       .then((result) => {
         if (result.containerStatus.available && result.serverStatus.available) {
-          resolve(result.serverStatus.status);
+          //const details = [];
+          const details = { port: "", version: "", onlinePlayers: "", maxPlayers: "", description: "" };
+          details.port = result.serverStatus.status.port;
+          details.version = result.serverStatus.status.version;
+          details.onlinePlayers = result.serverStatus.status.onlinePlayers;
+          details.maxPlayers = result.serverStatus.status.maxPlayers;
+          details.description = result.serverStatus.status.description.descriptionText;
+          resolve(details);
         } else {
-          resolve({});
+          resolve("");
         }
       })
-      .catch((error) => reject(error));
+      .catch((error) => {
+        //console.log(error);
+        reject(error);
+      });
   });
 }
 
@@ -43,7 +53,7 @@ async function getAllInfos() {
 
 async function userInfo(username) {
   return new Promise((resolve, reject) => {
-    const user = { name: username, state: "", showDetails: true, details: {}, dns: "" };
+    const user = { name: username, state: "", showDetails: true, details: "", dns: "" };
     containerClient
       .getContainer(username)
       .then((result) => {
