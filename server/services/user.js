@@ -17,7 +17,7 @@ function extendedStatus(username) {
         if (result.containerStatus.available && result.serverStatus.available) {
           resolve(result.serverStatus.status);
         } else {
-          resolve("gibt nix");
+          resolve({});
         }
       })
       .catch((error) => reject(error));
@@ -43,7 +43,7 @@ async function getAllInfos() {
 
 async function userInfo(username) {
   return new Promise((resolve, reject) => {
-    const user = { name: username, state: "", ip: "", dns: "" };
+    const user = { name: username, state: "", showDetails: true, details: {}, dns: "" };
     containerClient
       .getContainer(username)
       .then((result) => {
@@ -63,7 +63,7 @@ async function userInfo(username) {
   });
 }
 
-function verifyUserExits(username) {
+function verifyUserExists(username) {
   //console.log("loginUser");
   return new Promise((resolve, reject) => {
     if (typeof username !== "undefined" && username !== "") {
@@ -216,7 +216,7 @@ async function updateRuntime(username, additionalRuntime) {
 
 module.exports = {
   createNewUser,
-  verifyUserExits,
+  verifyUserExits: verifyUserExists,
   getUserNames,
   deleteUser,
   getAllInfos,

@@ -19,19 +19,15 @@
           <td>{{ user.name }}</td>
           <td>{{ user.state }}</td>
           <td>{{ user.dns }}</td>
-          <td>
-            <b-button
-              :disabled="user.state !== 'Running'"
-              @click="$emit('btnDetails', user.name, $event)"
-              variant="outline-success"
-              :title="
-                user.state === 'Stopped'
-                  ? 'Show container details'
-                  : 'Container must be running'
-              "
-            >
-              Details
-            </b-button>
+          <td>         
+
+          <button @click="btnDetails(user)">Details</button>
+          <template v-if="user.showDetails">
+            <h1>Title</h1>
+            <p>Paragraph 1</p>
+            <p>{{user.details}}</p>
+          </template>
+   
           </td>
           <td>
             <b-button
@@ -90,17 +86,18 @@ export default {
     filter: String,
   },
   data() {
-    return {
+    return {       
       users: [
         {
           name: "Frank",
           state: "Pending",
           dns: "accessible-giant-panda.germanywestcentral.azurecontainer.io",
+          showDetails: true
         },
-        { name: "Vic", state: "Pending", dns: "vic.reynolds@test.com" },
-        { name: "Gina", state: "Pending", dns: "gina.jabowski@test.com" },
-        { name: "Jessi", state: "Pending", dns: "jessi.glaser@test.com" },
-        { name: "Jay", state: "Pending", dns: "Usjay.bilzerian@test.comer" },
+        { name: "Vic", state: "Pending", showDetails: true, details: {}, dns: "vic.reynolds@test.com" },
+        { name: "Gina", state: "Pending", showDetails: true, details: {},dns: "gina.jabowski@test.com"},
+        { name: "Jessi", state: "Pending", showDetails: true, details: {},dns: "jessi.glaser@test.com" },
+        { name: "Jay", state: "Pending", showDetails: true, details: {},dns: "Usjay.bilzerian@test.comer"},
       ],
     };
   },
@@ -117,7 +114,21 @@ export default {
       });
     },
   },
-  methods: {
+  methods: {  
+    getExtendedDetails: function () {
+      this.users.forEach(user => {
+        if(user.state === "Running") {
+          alert(user.name)
+          let post = {
+            username: user.name,
+           };
+          this.axios.post("http://localhost:9000/container/extendedStatus", post).then((response) => {
+            alert(response.data);
+            //users.details = response.data;
+          }).catch(error => alert(error));
+        }
+      });
+    },  
     getTableData: function () {
       // axios stuff
       //console.log("fetching data");
@@ -129,12 +140,18 @@ export default {
     intervalFetchData: function () {
       setInterval(() => {
         this.getTableData();
+        //this.getExtendedDetails();
       }, 8000);
+    },
+    btnDetails: function (user) {      
+      user.showDetails = !user.showDetails;
+      this.getExtendedDetails();
     },
   },
   mounted() {
     // Run the functions once when mounted
     this.getTableData();
+    this.getExtendedDetails();
     // get state function ect.
     // Run the intervalFetchData function once to set the interval time for later refresh
     //this.intervalFetchData();
